@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &303221685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 458125273}
   m_Layer: 0
   m_Name: Plane (1)
-  m_TagString: Untagged
+  m_TagString: GROUND
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 1254364391}
   m_Layer: 0
   m_Name: Plane (2)
-  m_TagString: Untagged
+  m_TagString: GROUND
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2069,7 +2069,7 @@ GameObject:
   - component: {fileID: 1679024434}
   m_Layer: 0
   m_Name: Plane (3)
-  m_TagString: Untagged
+  m_TagString: GROUND
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 2014728516}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: GROUND
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

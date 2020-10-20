@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Jump();
+        if (Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("LEVEL");
+        }
     }
 
     private void FixedUpdate()
