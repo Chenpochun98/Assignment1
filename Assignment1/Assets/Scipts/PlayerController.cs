@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerPoints += pickup.Collect();
                 ServiceLocator.Get<UIManager>().UpdateScoreDisplay(playerPoints);
+                ServiceLocator.Get<UIManager>().winDisplay(playerPoints);
             }
         }
     }
