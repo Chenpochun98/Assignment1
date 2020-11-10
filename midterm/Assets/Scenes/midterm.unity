@@ -377,9 +377,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca342d737ce8b9f4f92bd3888a8928ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mcount: 0
   enemy: {fileID: 7753081164222277152, guid: 017ee9871276a484ba4cf2ffebd7b77b, type: 3}
   spawnpoint: {fileID: 942676238}
   enemycount: 0
+  enemyspawnnumber: 10
 --- !u!4 &942676240
 Transform:
   m_ObjectHideFlags: 0
@@ -697,5 +699,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6568438445319249916, guid: 7dfced586c2383a4090531d0747b46f3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7dfced586c2383a4090531d0747b46f3, type: 3}

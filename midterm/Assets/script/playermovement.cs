@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class playermovement : MonoBehaviour
 {
     public CharacterController controller;
@@ -36,6 +36,15 @@ public class playermovement : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumph * -2.0f * gravity);
         }
+        if (Input.GetKeyDown("s"))
+        {
+            Time.timeScale = 1;
+        }
+        if (Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("midterm");
+        }
+
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
