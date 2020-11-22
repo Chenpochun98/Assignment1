@@ -21,7 +21,7 @@ public class Target : MonoBehaviour, IDamageable
 
     public void OnDestroy()
     {
-        print("ai was destroyed");
+        print("Ai was destroyed");
         enemyspawn.Instance.mcount++;
         
     }
