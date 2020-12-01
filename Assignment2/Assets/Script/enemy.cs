@@ -5,56 +5,116 @@ using UnityEngine.AI;
 
 public class enemy : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private Animator animator;
-    private bool isdead;
-
+    public float maxSpeed = 4.0f;
     public Transform waypoint;
-    public float maxspeed = 4.0f;
-    public float speed = 5.0f;
-    private float dividedspeed = 0.0f;
-    private waypointmanager.path _path;
-    private int _currentwaypoints = 0;
+    public float maxHealth = 100.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    private NavMeshAgent _agent;
+    private Animator _animator;
+    private float dividedSpeed = 0.0f;
+    private bool isDead = false;
+    private waypointmanager.path _path;
+    private int _currentWaypoint = 0;
+    private float _currentHealth = 0.0f;
+    private float deathClipLength;
+
+    private void Awake()
     {
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        if(agent != null)
+        _animator = gameObject.GetComponent<Animator>();
+        if(_animator == null)
         {
-            agent.SetDestination(waypoint.transform.position);
-            agent.speed = maxspeed;
+            Debug.LogError("animator compoinaent does exists");
+            return;
         }
-        dividedspeed = 1 / maxspeed;
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
-        Updateanimation();
+        UpdateAnimation();
 
-        if(_path==null||_path.Wapoints==null||_path.Wapoints.Count<=_currentwaypoints)
+        if(_path == null || _path.Wapoints == null || _path.Wapoints.Count <= _currentWaypoint)
         {
             return;
         }
-        Transform destination = _path.Wapoints[_currentwaypoints];
-        agent.SetDestination(destination.position);
 
-        if((transform.position-destination.position).sqrMagnitude <3.0f*3.0f)
+        Transform destination = _path.Wapoints[_currentWaypoint];
+        _agent.SetDestination(destination.position);
+
+        if((transform.position - destination.position).sqrMagnitude < 3.0f * 3.0f)
         {
-            _currentwaypoints++; 
+            _currentWaypoint++;
         }
     }
 
-    private void Updateanimation()
+    private void UpdateAnimation()
     {
-        animator.SetFloat("enemyspeed",agent.velocity.magnitude * dividedspeed);
-        animator.SetBool("isdead", isdead);
+        _animator.SetFloat("enemyspeed", _agent.velocity.magnitude * dividedSpeed);
+        _animator.SetBool("isdead", isDead);
     }
 
     public void Init(waypointmanager.path path)
     {
         _path = path;
+        _currentHealth = maxHealth;
+
+        _agent = GetComponent<NavMeshAgent>();
+
+        if (_agent != null)
+        {
+            _agent.SetDestination(waypoint.position);
+            _agent.speed = maxSpeed;
+        }
+        dividedSpeed = 1 / maxSpeed;
+
+        AnimationClip[] animations = _animator.runtimeAnimatorController.animationClips;
+        if (animations == null || animations.Length <= 0)
+        {
+            Debug.Log("animations Error");
+            return;
+        }
+
+        for (int i = 0; i < animations.Length; ++i)
+        {
+            if (animations[i].name == "Death From Right")
+            {
+                deathClipLength = animations[i].length;
+                break;
+            }
+        }
     }
+
+    public float GetHealth()
+    {
+        return _currentHealth;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+        if(_currentHealth <= 0.0f)
+        {
+            StartCoroutine("Kill");
+        }
+    }
+
+    public IEnumerator Kill()
+    {
+        isDead = true;
+
+        yield return new WaitForSeconds(deathClipLength);
+        ResetAndRecycle();
+    }
+
+   private void ResetAndRecycle()
+   {
+        _currentWaypoint = 0;
+        isDead = false;
+        _currentHealth = maxHealth;
+        transform.rotation = Quaternion.identity;
+        Destroy(_agent);
+        ServiceLocator.Get<ObjectPoolManager>().RecycleObject(gameObject);
+   }
 }
