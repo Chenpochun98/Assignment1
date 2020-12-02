@@ -60,7 +60,7 @@ public class enemy : MonoBehaviour
         _path = path;
         _currentHealth = maxHealth;
 
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = gameObject.AddComponent<NavMeshAgent>();
 
         if (_agent != null)
         {
